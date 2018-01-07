@@ -79,49 +79,25 @@ darts.prototype.getPermutations = function(score, options) {
     for (let i = 0; i < options.length; i++) {
 
         if (options[i].value === score && options[i].finish) {
-
-            results.push([options[i]]);
-
-        } else if (options[i].value <= score - 2) {
-
-            results.push([options[i]]);
-
+            results.add(options[i].name);
+            continue;
         }
 
-    }
+        const filtered1 = this.removeLargeValues(options, score - options[i].value);
 
-    for (let i = 0; i < results.length; i++) {
+        for (let j = 0; j < filtered1; j++) {
 
-        const filtered = this.removeLargeValues(options, score - results[i][0].value);
-
-        for (let j = 0; j < filtered.length; j++) {
-
-            if (results[i][0].value + filtered[j].value === score && filtered[j].finish) {
-
-                results[i].push([filtered[j]]);
-
-            } else if (results[i][0].value <= score - filtered[j].value - 2) {
-
-                results[i].push([filtered[j]]);
-
+            if (options[i].value + filtered1[j].value === score && filtered1[j].finish) {
+                results.add(options[i].name + ' ' + filtered1[j].name);
+                continue;
             }
 
-        }
-
-    }
-
-    for (let i = 0; i < results.length; i++) {
-
-        for (let j = 0; j < results[i].length; j++) {
-
-            const filtered2 = this.removeLargeValues(options, score - results[i][0].value - results[i][j].value);
+            const filtered2 = this.removeLargeValues(options, score - options[i].value - filtered1[j].value);
 
             for (let k = 0; k < filtered2.length; k++) {
 
-                if (results[i][0].value + results[i][j].value + filtered2[k].value === score && filtered2[k].finish) {
-
-                    results[i].push([filtered2[k]]);
-
+                if (options[i].value + filtered1[j].value + filtered2[k].value === score && filtered2[k].finish) {
+                    results.add(options[i].name + ' ' + filtered1[j].name + ' ' + filtered2[k].value);
                 }
 
             }
@@ -130,36 +106,59 @@ darts.prototype.getPermutations = function(score, options) {
 
     }
 
-    return this.formatPermutations(results);
-
-};
-
-darts.prototype.formatPermutations = function(perms) {
-
-    let results = [];
-
-    for (let i = 0; i < perms.length; i++) {
-
-        if (perms[i].length === 1) {
-            results.push(perms[i][0].name);
-            continue;
-        }
-
-        for (let j = 0; j < perms[i].length; j++) {
-
-            if (perms[i][j].length === 1) {
-                results.push(perms[i][0].name + ' ' + perms[i][j][0].name);
-                continue;
-            }
-
-            // for (let k = 0; k < perms[i][j].length; k++) {
-            //
-            //     results.push(perms[i][0].name + ' ' + perms[i][j][0].name + ' ' + perms[i][j][k][0].name);
-            // }
-
-        }
-
-    }
+    // for (let i = 0; i < options.length; i++) {
+    //
+    //     if (options[i].value === score && options[i].finish) {
+    //
+    //         results.push([options[i]]);
+    //
+    //     } else if (options[i].value <= score - 2) {
+    //
+    //         results.push([options[i]]);
+    //
+    //     }
+    //
+    // }
+    //
+    // for (let i = 0; i < results.length; i++) {
+    //
+    //     const filtered = this.removeLargeValues(options, score - results[i][0].value);
+    //
+    //     for (let j = 0; j < filtered.length; j++) {
+    //
+    //         if (results[i][0].value + filtered[j].value === score && filtered[j].finish) {
+    //
+    //             results[i].push([filtered[j]]);
+    //
+    //         } else if (results[i][0].value <= score - filtered[j].value - 2) {
+    //
+    //             results[i].push([filtered[j]]);
+    //
+    //         }
+    //
+    //     }
+    //
+    // }
+    //
+    // for (let i = 0; i < results.length; i++) {
+    //
+    //     for (let j = 0; j < results[i].length; j++) {
+    //
+    //         const filtered2 = this.removeLargeValues(options, score - results[i][0].value - results[i][j].value);
+    //
+    //         for (let k = 0; k < filtered2.length; k++) {
+    //
+    //             if (results[i][0].value + results[i][j].value + filtered2[k].value === score && filtered2[k].finish) {
+    //
+    //                 results[i].push([filtered2[k]]);
+    //
+    //             }
+    //
+    //         }
+    //
+    //     }
+    //
+    // }
 
     return results;
 
