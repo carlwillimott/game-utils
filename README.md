@@ -1,5 +1,5 @@
 # Game Utils
-A simple module providing utility functions for various games.
+A simple helper library for solving problems relating to games.
 
 ## Darts
 Get a list of possible finishes for a score between 2 and 170 inclusive. Each solution will be listed in the solutions array assuming it matches the following conditions:
