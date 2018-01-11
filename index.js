@@ -1,3 +1,5 @@
 const darts = require('./darts');
 
-console.log(new darts(169));
+module.exports = {
+    darts
+};
