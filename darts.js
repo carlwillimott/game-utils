@@ -15,7 +15,7 @@ const getFinishesForScore = function(score) {
 
     const solutions = _findSolutions(score);
 
-    if (solutions) {
+    if (solutions.length > 0) {
         response.solutions = solutions;
         response.success = true;
         response.message = 'A total of ' + solutions.length + ' solutions were found.'
@@ -53,7 +53,7 @@ const _generateOptions = function (prefix, multiplier, finish) {
     for (let i = 1; i <= 20; i++) {
         const name = i.toString();
         values.push({
-            name: prefix ? prefix + name : name,
+            name: prefix + name,
             value: i * multiplier,
             finish: finish
         });
