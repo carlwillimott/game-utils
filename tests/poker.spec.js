@@ -130,4 +130,9 @@ describe('Poker module', () => {
 
     });
 
+    it('should find a three of a kind', () => {
+
+
+    });
+
 });

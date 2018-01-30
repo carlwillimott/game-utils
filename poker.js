@@ -37,9 +37,8 @@ const _checkForSolutions = function(cards) {
     solutions.push(..._findRoyalFlush(cards));
     solutions.push(..._findStraightFlush(cards));
     solutions.push(..._findFourOfAKind(cards));
-
     // solutions.push(..._findThreeOfAKind(cards));
-    // solutions.push(..._findPair(cards));
+    // solutions.push(..._findAPair(cards));
 
     return solutions;
 };
@@ -176,6 +175,18 @@ const _findFourOfAKind = function(cards) {
 
 };
 
+const _findThreeOfAKind = function(cards) {
+
+    return _matchSet(_kindHelper(3), cards, 'TK', 'Three of a kind');
+
+};
+
+const _findAPair = function(cards) {
+
+    return _matchSet(_kindHelper(2), cards, 'PA', 'Pair');
+
+};
+
 const _matchSet = function(sets, cards, key, description) {
 
     let found = [];
@@ -203,6 +214,51 @@ const _matchSet = function(sets, cards, key, description) {
 
 };
 
+const _kindHelper = function(count) {
+
+    let sets = [];
+
+    for (let i = 0; i < v1.length; i++) {
+
+        let inner = [];
+
+        for (let j = 0; j < v2.length; j++) {
+            inner.push(v1[i] + v2[j]);
+        }
+
+        let target = [];
+
+        _getAllCombinations(inner, count, target);
+
+        sets.push(target);
+    }
+
+    return sets;
+
+};
+
+// https://www.ibm.com/developerworks/community/blogs/hazem/entry/javascript_getting_all_possible_combinations?lang=en
+const _getCombinations = function(array, size, start, initial, output) {
+
+    if (initial.length >= size) {
+
+        output.push(initial);
+
+    } else {
+
+        for (let i = start; i < array.length; ++i) {
+            _getCombinations(array, size, i + 1, initial.concat(array[i]), output);
+        }
+
+    }
+
+};
+
+const _getAllCombinations = function(array, size, output) {
+    _getCombinations(array, size, 0, [], output);
+};
+
+
 module.exports = {
     getHands,
     _checkForSolutions,
@@ -213,5 +269,10 @@ module.exports = {
     _findRoyalFlush,
     _findStraightFlush,
     _findFourOfAKind,
-    _matchSet
+    _findThreeOfAKind,
+    _findAPair,
+    _matchSet,
+    _kindHelper,
+    _getCombinations,
+    _getAllCombinations
 };
