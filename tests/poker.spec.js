@@ -4,6 +4,37 @@ const poker = require('../index').poker;
 
 describe('Poker module', () => {
 
+    it('should fail with invalid cards', () => {
+
+        let res = {
+            success: false,
+            solutions: [],
+            message: 'One or more cards are invalid.',
+            cards: [],
+        };
+
+        const cards1 = ['xx', 'yy', 'zz'];
+        const test1 = poker.getHands(cards1);
+        res.cards = cards1;
+        assert.deepEqual(test1, res);
+
+        const cards2 = ['AD', '11D'];
+        const test2 = poker.getHands(cards2);
+        res.cards = cards2;
+        assert.deepEqual(test2, res);
+
+        const cards3 = [];
+        const test3 = poker.getHands(cards3);
+        res.cards = cards3;
+        assert.deepEqual(test3, res);
+
+        const cards4 = ['2D', 'KD', '4'];
+        const test4 = poker.getHands(cards4);
+        res.cards = cards4;
+        assert.deepEqual(test4, res);
+
+    });
+
     it('should find a royal flush', () => {
 
         // @ TODO

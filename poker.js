@@ -38,6 +38,9 @@ const _checkForSolutions = function(cards) {
     solutions.push(..._findStraightFlush(cards));
     solutions.push(..._findFourOfAKind(cards));
 
+    // solutions.push(..._findThreeOfAKind(cards));
+    // solutions.push(..._findPair(cards));
+
     return solutions;
 };
 
@@ -47,12 +50,23 @@ const _checkValidCards = function(cards) {
         return false;
     }
 
-    // @ TODO - Need to handle 10 as it's got 2 chars instead of 1.
-    // for (let i = 0; i < cards.length; i++) {
-    //     if (cards[i].length !== 2 || v1.indexOf(cards[i][0]) === -1 || v2.indexOf(cards[i][1]) === -1) {
-    //         return false;
-    //     }
-    // }
+    for (let i = 0; i < cards.length; i++) {
+
+        const len = cards[i].length;
+
+        if (len < 2 || len > 3) {
+            return false;
+        }
+
+        if (len === 2 && (v1.indexOf(cards[i][0]) === -1 || v2.indexOf(cards[i][1]) === -1)) {
+            return false;
+        }
+
+        if (len === 3 && (v1.indexOf(cards[i][0] + '' + cards[i][1]) === -1 || v2.indexOf(cards[i][2]) === -1)) {
+            return false;
+        }
+
+    }
 
     return true;
 
