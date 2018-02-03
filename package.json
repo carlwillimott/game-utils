@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha tests/**.spec.js",
     "cover": "nyc mocha tests/**.spec.js",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "game",
