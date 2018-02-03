@@ -112,11 +112,5 @@ const _checkValidScore = function(score) {
 };
 
 module.exports = {
-    getFinishesForScore,
-    _findSolutions,
-    _generateOptions,
-    _sortScores,
-    _removeLargeValues,
-    _getPermutations,
-    _checkValidScore
+    getFinishesForScore
 };
