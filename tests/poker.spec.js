@@ -35,6 +35,27 @@ describe('Poker module', () => {
 
     });
 
+    it('should only allow a single card once', () => {
+
+        let res = {
+            success: false,
+            solutions: [],
+            message: 'Please ensure each card is included only once.',
+            cards: [],
+        };
+
+        const cards1 = ['AS', 'AS'];
+        const test1 = poker.getHands(cards1);
+        res.cards = cards1;
+        assert.deepEqual(test1, res);
+
+        const cards2 = ['2C', '2C', '8C', '3D'];
+        const test2 = poker.getHands(cards2);
+        res.cards = cards2;
+        assert.deepEqual(test2, res);
+
+    });
+
     it('should find a royal flush', () => {
 
         const test1 = poker.getHands(['10C', 'JC', 'QC', 'KC', 'AC']);
