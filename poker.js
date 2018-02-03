@@ -37,8 +37,8 @@ const _checkForSolutions = function(cards) {
     solutions.push(..._findRoyalFlush(cards));
     solutions.push(..._findStraightFlush(cards));
     solutions.push(..._findFourOfAKind(cards));
-    // solutions.push(..._findThreeOfAKind(cards));
-    // solutions.push(..._findAPair(cards));
+    solutions.push(..._findThreeOfAKind(cards));
+    solutions.push(..._findAPair(cards));
 
     return solutions;
 };
@@ -230,10 +230,10 @@ const _kindHelper = function(count) {
 
         _getAllCombinations(inner, count, target);
 
-        sets.push(target);
+        sets.push(...target);
     }
 
-    return sets;
+    return sets
 
 };
 
