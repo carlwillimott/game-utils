@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/carlwillimott/game-utils.svg?branch=master)](https://travis-ci.org/carlwillimott/game-utils)
+
 # Game Utils
 A simple helper library for solving problems relating to games.
 
