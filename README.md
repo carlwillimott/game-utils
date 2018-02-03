@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/carlwillimott/game-utils.svg?branch=master)](https://travis-ci.org/carlwillimott/game-utils)
+[![Coverage Status](https://coveralls.io/repos/github/carlwillimott/game-utils/badge.svg?branch=master)](https://coveralls.io/github/carlwillimott/game-utils?branch=master)
 
 # Game Utils
 A simple helper library for solving problems relating to games.
