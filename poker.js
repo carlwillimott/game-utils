@@ -30,15 +30,51 @@ const getHands = function(cards) {
 
 const _checkForSolutions = function(cards) {
 
+
+    let temp = {
+        RF: [], SF: [], FK: [], FH: [], FL: [],
+        ST: [], TK: [], TP: [], PA: [], HC: [],
+    };
+
     let solutions = [];
 
     cards.sort(_sortCards);
 
-    solutions.push(..._findRoyalFlush(cards));
-    solutions.push(..._findStraightFlush(cards));
-    solutions.push(..._findFourOfAKind(cards));
-    solutions.push(..._findThreeOfAKind(cards));
-    solutions.push(..._findAPair(cards));
+    const total = cards.length;
+
+    // temp.HC = _findHighCard(cards);
+
+    if (total > 1) {
+        temp.PA = _findAPair(cards);
+
+        if (total > 2) {
+            temp.TK = _findThreeOfAKind(cards);
+
+            if (total > 3) {
+                temp.TP = _findTwoPairs(cards, temp);
+                temp.FK = _findFourOfAKind(cards);
+
+                if (total > 4) {
+                    temp.SF = _findStraightFlush(cards);
+                    temp.RF = _findRoyalFlush(cards);
+                }
+
+            }
+
+        }
+
+    }
+
+    solutions.push(...temp.RF);
+    solutions.push(...temp.SF);
+    solutions.push(...temp.FK);
+    // solutions.push(..._findFullHouse(cards));
+    // solutions.push(..._findFlush(cards));
+    // solutions.push(..._findStraight(cards));
+    solutions.push(...temp.TK);
+    solutions.push(...temp.TP);
+    solutions.push(...temp.PA);
+    // solutions.push(temp.HC);
 
     return solutions;
 };
@@ -181,6 +217,42 @@ const _findThreeOfAKind = function(cards) {
 
 };
 
+const _findTwoPairs = function(cards, found) {
+
+    let sets = [];
+
+    if (found.PA.length > 1) {
+
+        let current = [];
+
+        for (let i = 0; i < found.PA.length; i++) {
+            current.push(found.PA[i].cards);
+        }
+
+        let target = [];
+
+        _getAllCombinations(current, 2, target);
+
+        for (let i = 0; i < target.length; i++) {
+
+            let inner = [];
+
+            for (let j = 0; j < target[i].length; j++) {
+                inner.push(...target[i][j]);
+            }
+
+            if (!_hasDuplicates(inner)) {
+                sets.push(inner);
+            }
+
+        }
+
+    }
+
+    return _matchSet(sets, cards, 'TP', 'Two pairs');
+
+};
+
 const _findAPair = function(cards) {
 
     return _matchSet(_kindHelper(2), cards, 'PA', 'Pair');
@@ -237,6 +309,11 @@ const _kindHelper = function(count) {
 
 };
 
+// https://stackoverflow.com/a/7376645
+const _hasDuplicates = function (array) {
+    return (new Set(array)).size !== array.length;
+};
+
 // https://www.ibm.com/developerworks/community/blogs/hazem/entry/javascript_getting_all_possible_combinations?lang=en
 const _getCombinations = function(array, size, start, initial, output) {
 
@@ -247,6 +324,7 @@ const _getCombinations = function(array, size, start, initial, output) {
     } else {
 
         for (let i = start; i < array.length; ++i) {
+            array[i][Symbol.isConcatSpreadable] = false;
             _getCombinations(array, size, i + 1, initial.concat(array[i]), output);
         }
 
@@ -260,19 +338,5 @@ const _getAllCombinations = function(array, size, output) {
 
 
 module.exports = {
-    getHands,
-    _checkForSolutions,
-    _checkValidCards,
-    _checkDuplicateCards,
-    _sortCards,
-    _getCardValue,
-    _findRoyalFlush,
-    _findStraightFlush,
-    _findFourOfAKind,
-    _findThreeOfAKind,
-    _findAPair,
-    _matchSet,
-    _kindHelper,
-    _getCombinations,
-    _getAllCombinations
+    getHands
 };

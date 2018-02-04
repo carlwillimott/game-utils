@@ -27,7 +27,7 @@ describe('Darts module', () => {
 
         assert(darts.getFinishesForScore(1).success === false);
 
-        console.log(darts.getFinishesForScore(165).success === false);
+        assert(darts.getFinishesForScore(165).success === false);
 
     });
 
