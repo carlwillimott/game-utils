@@ -55,6 +55,9 @@ const _checkForSolutions = function(cards) {
                 temp.FK = _findFourOfAKind(cards);
 
                 if (total > 4) {
+                    // temp.ST = _findStraight(cards);
+                    // temp.FL = ..._findFlush(cards);
+                    // temp.FH = _findFullHouse(cards, temp);
                     temp.SF = _findStraightFlush(cards);
                     temp.RF = _findRoyalFlush(cards);
                 }
@@ -68,13 +71,13 @@ const _checkForSolutions = function(cards) {
     solutions.push(...temp.RF);
     solutions.push(...temp.SF);
     solutions.push(...temp.FK);
-    // solutions.push(..._findFullHouse(cards));
-    // solutions.push(..._findFlush(cards));
-    // solutions.push(..._findStraight(cards));
+    solutions.push(...temp.FH);
+    solutions.push(...temp.FL);
+    solutions.push(...temp.ST);
     solutions.push(...temp.TK);
     solutions.push(...temp.TP);
     solutions.push(...temp.PA);
-    // solutions.push(temp.HC);
+    solutions.push(...temp.HC);
 
     return solutions;
 };
@@ -217,6 +220,7 @@ const _findThreeOfAKind = function(cards) {
 
 };
 
+// @ TODO - Remove the duplicate pairs.
 const _findTwoPairs = function(cards, found) {
 
     let sets = [];
@@ -263,7 +267,7 @@ const _matchSet = function(sets, cards, key, description) {
 
     let found = [];
 
-    if (cards.length >= sets[0].length) {
+    if (sets.length > 0 && cards.length >= sets[0].length) {
 
         for (let i = 0; i < sets.length; i++) {
 
